@@ -24,11 +24,7 @@ import { useMutation, useQuery } from 'react-query'
 // import { useRouter } from 'next/router'
 import { Login } from '@/services/.Interfaces'
 
-export default async function Acessar({
-  params,
-}: {
-  params: { slug: string }
-}) {
+export default function Acessar({ params }: { params: { slug: string } }) {
   console.log(params)
 
   // const router = useRouter()
@@ -96,7 +92,7 @@ export default async function Acessar({
   }
 
   return (
-    <div className={styles.acessar}>
+    <div className="bg-primaryColor min-h-screen flex items-center justify-center font-Montserrat flex-col">
       {/* <CustomLoaders
         open={loginURL.isLoading || login.isLoading}
         animation={'loadingWhite'}
@@ -104,27 +100,25 @@ export default async function Acessar({
 
       {!loginURL.isLoading && !login.isLoading && (
         <>
-          <div className={styles.header_back}>
-            <div className={styles.div_corner}>
+          <div className="w-full flex items-center">
+            <div className="w-20">
               <div
-                className={styles.item}
+                className="text-white flex items-center"
                 // onClick={() => router.back()}
               >
-                <i className="material-icons">arrow_back</i>
+                <i className="material-icons scale-80% text-decoration-none hover:cursor-pointer">
+                  arrow_back
+                </i>
                 <span>Voltar</span>
               </div>
             </div>
-            <div className={styles.div_center}>
-              <img alt="Logo Grazziotin" src={logo}></img>
+            <div className="w-60 flex items-center justify-center">
+              <img alt="Logo Grazziotin" src={logo} />
             </div>
           </div>
-          <div className={styles.container_form}>
-            <h1 style={{ paddingBottom: '1rem' }}>Acessar</h1>
-            <FormControl
-              sx={sxLogin}
-              variant="standard"
-              className={styles.user}
-            >
+          <div className="h-full flex flex-col items-center pt-14 w-full">
+            <h1 className="p-4 text-white">Acessar</h1>
+            <FormControl sx={sxLogin} variant="standard" className="w-1/4">
               <InputLabel htmlFor="standard-adornment-password">
                 Usuário
               </InputLabel>
@@ -135,11 +129,7 @@ export default async function Acessar({
                 onChange={(e) => setCodUsuario(e.target.value)}
               />
             </FormControl>
-            <FormControl
-              sx={sxLogin}
-              variant="standard"
-              className={styles.pass}
-            >
+            <FormControl sx={sxLogin} variant="standard" className="w-1/4">
               <InputLabel htmlFor="standard-adornment-password">
                 Senha
               </InputLabel>
@@ -166,7 +156,7 @@ export default async function Acessar({
               <IconButton
                 aria-label="toggle password visibility"
                 onClick={handleCheckboxChange}
-                style={{ color: 'white', marginTop: '20px' }}
+                className="text-white mt-5"
                 size="small"
               >
                 {checked ? (
@@ -181,7 +171,7 @@ export default async function Acessar({
             <button
               id="submit"
               type="submit"
-              className={styles.btn}
+              className="w-1/4 h-full m-10 bg-white rounded-3xl border-none text-slate-600 font-bold outline-none hover:cursor-pointer shadow"
               onClick={() => Logar()}
             >
               ENTRAR
@@ -190,7 +180,7 @@ export default async function Acessar({
             <button
               // onClick={() => router.push('/usuario/esqueciSenha')}
               type="button"
-              className={styles.btnForgot}
+              className="text-white hover:cursor-pointer"
             >
               <span>Esqueci a senha</span>
             </button>

@@ -20,6 +20,7 @@
     "crypto-js": "^4.1.1",
     "eslint-config-next": "13.4.12",
     "js-cookie": "^3.0.5",
+    "material-icons": "^1.13.9",
     "next": "13.4.12",
     "next-with-less": "^3.0.1",
     "postcss": "8.4.27",
