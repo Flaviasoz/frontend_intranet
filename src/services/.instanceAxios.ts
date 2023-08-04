@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -9,9 +9,8 @@ const info = Cookies.get('LOGIN_INFO');
 
 const infodec = info ? decrypt(info) : '';
 const token = info ? `Bearer ${JSON.parse(infodec).accessToken}` : '';
-
 const instance = axios.create({
-	baseURL: process.env.REACT_APP_HOSTNAME_API,
+	baseURL: process.env.NEXT_PUBLIC_HOSTNAME_API,
 	headers: {
 		'Content-Type': 'application/json',
 		authorization: token

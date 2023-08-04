@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import { AxiosResponse } from 'axios'
 import axios from './.instanceAxios'

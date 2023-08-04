@@ -17,19 +17,17 @@ import Input from '@mui/material/Input'
 // import ModalGlobal from '@/pages/components/GlobalModal'
 import { logar, logarURL } from '@/services/auth'
 import { sxLogin } from '@/styles/sx'
-import Cookies from 'js-cookie'
-import { encrypt } from '@/functions'
 import { useMutation, useQuery } from 'react-query'
 // import CustomLoaders from '@/pages/components/Loader'
-// import { useRouter } from 'next/router'
 import { Login } from '@/services/.Interfaces'
 import Image from 'next/image'
-import { FilledInput, TextField } from '@mui/material'
+import { TextField } from '@mui/material'
+import { useRouter } from 'next/navigation'
+import setUser from '@/app/cookies/auth'
+import { encrypt } from '@/functions'
 
 export default function Acessar({ params }: { params: { slug: string } }) {
-  console.log(params)
-
-  // const router = useRouter()
+  const router = useRouter()
   const [codUsuario, setCodUsuario] = useState('')
   const [senhaUsuario, setSenhaUsuario] = useState('')
   const [isModalOpen, setModal] = useState(false)
@@ -51,14 +49,8 @@ export default function Acessar({ params }: { params: { slug: string } }) {
   const login = useMutation((data: Login) => logar(data), {
     mutationKey: 'login',
     onSuccess: (r) => {
-      Cookies.set('LOGIN_INFO', encrypt(JSON.stringify({ ...r.data })), {
-        expires: 7,
-        sameSite: 'strict',
-        priority: 'high',
-        httpOnly: false,
-        secure: false,
-      })
-      // router.push('/')
+      setUser(encrypt(JSON.stringify(r.data)))
+      router.push('/')
     },
     onError: (e: any) => {
       setMessage(e?.response?.data?.errors[0][0].details)
@@ -111,16 +103,19 @@ export default function Acessar({ params }: { params: { slug: string } }) {
         <>
           <div className="w-full flex items-center flex-row pt-8">
             <div className="w-1/4 items-center flex justify-end">
-              <div className="text-white items-center flex-row flex text-base justify-center cursor-pointer">
+              <div
+                className="text-white items-center flex-row flex text-base justify-center cursor-pointer"
+                onClick={() => router.push('/')}
+              >
                 <ArrowBack />
-                <span className="ml-3">Voltar</span>
+                <span className="ml-0 mr-5 md:ml-3">Voltar</span>
               </div>
             </div>
             <div className="flex items-center justify-center w-1/2">
               <Image alt="Logo Grazziotin" src={logo} width={200} height={40} />
             </div>
           </div>
-          <div className=" items-center flex flex-col h-5/6 pt-14">
+          <div className=" items-center flex flex-col h-5/6 pt-16">
             <h1 className="text-white font-medium text-4xl pt-12 pb-6">
               Acessar
             </h1>
@@ -132,14 +127,21 @@ export default function Acessar({ params }: { params: { slug: string } }) {
               value={codUsuario}
               onChange={(e) => setCodUsuario(e.target.value)}
               type="number"
+              className="w-3/4 md:w-1/5"
             />
-            <FormControl sx={sxLogin} variant="standard">
+            <FormControl
+              className="w-3/4 md:w-1/5"
+              sx={sxLogin}
+              variant="standard"
+            >
               <InputLabel htmlFor="standard-adornment-password">
-                Password
+                Senha
               </InputLabel>
               <Input
                 id="standard-adornment-password"
                 type={showPassword ? 'text' : 'password'}
+                value={senhaUsuario}
+                onChange={(e) => setSenhaUsuario(e.target.value)}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -177,7 +179,7 @@ export default function Acessar({ params }: { params: { slug: string } }) {
             <button
               id="submit"
               type="submit"
-              className="bg-white rounded-3xl text-black font-bold h-14 mt-12 w-3/6 md:w-1/6"
+              className="bg-white rounded-full text-slate-800 font-semibold h-14 mt-12 w-3/6 md:w-1/6 hover:shadow-md"
               onClick={() => Logar()}
             >
               ENTRAR

@@ -1,4 +1,4 @@
-'use server'
+'use client'
 
 import { AxiosResponse } from 'axios'
 import { Login, LoginResponse, LoginURL, ResponseLoginURL } from './.Interfaces'
@@ -9,8 +9,8 @@ export const logar = async (
 ): Promise<AxiosResponse<LoginResponse>> => {
   const response = await axios.post<LoginResponse>('/auth/login', {
     ...data,
-    clientId: parseInt(process.env.REACT_APP_ID_CLIENT as string),
-    clientSecret: process.env.REACT_APP_SECRET_CLIENT,
+    clientId: parseInt(process.env.NEXT_PUBLIC_ID_CLIENT as string),
+    clientSecret: process.env.NEXT_PUBLIC_SECRET_CLIENT,
   })
 
   return Promise.resolve(response)

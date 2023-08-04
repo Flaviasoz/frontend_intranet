@@ -65,9 +65,11 @@ export function useMobile(h: number) {
 }
 
 export const encrypt = (content: any) => {
+  console.log(process.env.NEXT_PUBLIC_SECRET_CLIENT)
+
   const encryptedToken = CryptoJS.AES.encrypt(
     content,
-    process.env?.REACT_APP_SECRET_CLIENT ?? '',
+    process.env.NEXT_PUBLIC_SECRET_CLIENT ?? '',
   ).toString()
 
   return encryptedToken
@@ -76,7 +78,7 @@ export const encrypt = (content: any) => {
 export const decrypt = (encryptedContent: any) => {
   const decryptedTokenBytes = CryptoJS.AES.decrypt(
     encryptedContent,
-    process.env?.REACT_APP_SECRET_CLIENT ?? '',
+    process.env.NEXT_PUBLIC_SECRET_CLIENT ?? '',
   )
   const decryptedToken = decryptedTokenBytes.toString(CryptoJS.enc.Utf8)
 
